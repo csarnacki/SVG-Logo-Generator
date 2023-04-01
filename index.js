@@ -25,3 +25,18 @@ inquirer
         message: 'What color would you like the shape to be?',
     },
 ])
+
+const writeFile = fileContent => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile('logo.txt', fileContent, err => {
+            if(err) {
+                reject(err);
+                return;
+            }
+            resolve({
+                ok: true,
+                message: 'Logo created!'
+            });
+        });
+    });
+};
