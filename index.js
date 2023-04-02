@@ -55,19 +55,17 @@ async function init() {
 	let svgString = "";
 	let svg_file = "logo.svg";
 
-    // Prompt the user for answers
     const answers = await inquirer.prompt(questions);
 
     let text = ''
-	//user font color
-	textColor = answers["textColor"];
-	//user shape color
-	shapeColor = answers['shapeColor'];
-	//user shape type
+
+    textColor = answers["textColor"];
+
+    shapeColor = answers['shapeColor'];
+
     let shape;
 	shape = answers["shape"];
 	
-	//user shape
 	if (shape === "Square" || shape === "square") {
 		shape = new Square();
 	}
@@ -80,8 +78,7 @@ async function init() {
 
 	shape.setColor(shapeColor);
 
-	// Create a new Svg instance and add the shape and text elements to it
-	var svg = new Svg();
+	let svg = new Svg();
 	svg.setTextElement(text, textColor);
 	svg.setShapeElement(shape);
 	svgString = svg.render();
