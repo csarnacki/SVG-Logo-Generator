@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const {Circle, Square, Triangle} = require("./lib/shape");
 
 class Svg{
     constructor(){
@@ -42,7 +43,7 @@ const questions = [
 ];
 
 const writeToFile = data => {
-    fs.writeFile('./lib/logo.svg', data, err => {
+    fs.writeFile('./lib/logo.svg', data.toString(), err => {
         if (err) {
          console.log(err);
         }
@@ -50,20 +51,41 @@ const writeToFile = data => {
     });
 }
 
-const init = () => {
-    return inquirer.prompt(questions)
-    .then(logoData => {
-        return logoData;
-    })
-}
+async function init() {
+	let svgString = "";
+	let svg_file = "logo.svg";
 
+    // Prompt the user for answers
+    const answers = await inquirer.prompt(questions);
+
+    let text = ''
+	//user font color
+	textColor = answers["textColor"];
+	//user shape color
+	shapeColor = answers['shapeColor'];
+	//user shape type
+    let shape;
+	shape = answers["shape"];
+	
+	//user shape
+	if (shape === "Square" || shape === "square") {
+		shape = new Square();
+	}
+	else if (shape === "Circle" || shape === "circle") {
+		shape = new Circle();
+	}
+	else if (shape === "Triangle" || shape === "triangle") {
+		shape = new Triangle();
+	}
+
+	shape.setColor(shapeColor);
+
+	// Create a new Svg instance and add the shape and text elements to it
+	var svg = new Svg();
+	svg.setTextElement(text, textColor);
+	svg.setShapeElement(shape);
+	svgString = svg.render();
+	
+	writeToFile(svg_file, svgString); 
+}
 init()
-.then(logoPage => {
-    return writeToFile(logoPage);
-})
-.then(fileResponse => {
-    console.log(fileResponse.message);
-})
-.catch(err => {
-    console.log(err);
-})
