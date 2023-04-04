@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const {Circle, Square, Triangle} = require("./lib/shape");
+const {Circle, Square, Triangle} = require('./lib/shape.js');
 
 class Svg{
     constructor(){
@@ -8,10 +8,10 @@ class Svg{
         this.shapeElement = ''
     }
     render(){
-        return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200">${this.shapeElement}${this.textElement}</svg>`
+        return `<svg xmlns='http://www.w3.org/2000/svg' width='300px' height='200px'>${this.shapeElement}${this.textElement}</svg>`
     }
-    setTextElement(text,color){
-        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${color}">${text}</text>`
+    setTextElement(text, textColor){
+        this.textElement = `<text x='50%' y='50%' font-size='100px' text-anchor='middle' fill='${textColor}'/>${text}`
     }
     setShapeElement(shape){
         this.shapeElement = shape.render()
@@ -52,27 +52,25 @@ const writeToFile = data => {
 }
 
 async function init() {
-	let svgString = "";
-	let svg_file = "logo.svg";
+	let svgString = '';
 
     const answers = await inquirer.prompt(questions);
 
-    let text = ''
+    let text = answers['text'];
 
-    textColor = answers["textColor"];
+    let textColor = answers['textColor'];
 
-    shapeColor = answers['shapeColor'];
+    let shapeColor = answers['shapeColor'];
 
-    let shape;
-	shape = answers["shape"];
+	let shape = answers['shape'];
 	
-	if (shape === "Square" || shape === "square") {
+	if (shape === 'square') {
 		shape = new Square();
 	}
-	else if (shape === "Circle" || shape === "circle") {
+	else if (shape === 'circle') {
 		shape = new Circle();
 	}
-	else if (shape === "Triangle" || shape === "triangle") {
+	else if (shape === 'triangle') {
 		shape = new Triangle();
 	}
 
@@ -83,6 +81,6 @@ async function init() {
 	svg.setShapeElement(shape);
 	svgString = svg.render();
 	
-	writeToFile(svg_file, svgString); 
+	writeToFile(svgString, svg);
 }
 init()
