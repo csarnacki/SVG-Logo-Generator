@@ -1,1 +1,1 @@
-<svg xmlns='http://www.w3.org/2000/svg' width='300px' height='200px'><circle cx='50%' cy='50%' r='100' height='100%' width='100%' fill='pink' /><text x='50%' y='50%' font-size='100px' z-index='1' text-anchor='middle' fill='blue'/>SAW</svg>
+<svg xmlns='http://www.w3.org/2000/svg' width='300px' height='200px'><rect x='50' height='200' width='200' fill='red' /><text x='50%' y='50%' font-size='100px' text-anchor='middle' fill='orange'/>MAR</svg>
